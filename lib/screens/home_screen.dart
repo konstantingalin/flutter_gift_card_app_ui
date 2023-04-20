@@ -4,6 +4,7 @@ import 'package:flutter_gift_card_app_ui/models/card_model.dart';
 import 'package:flutter_gift_card_app_ui/utilities/card_category_extension.dart';
 
 import '../widgets/app_text.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 import '../widgets/custom_chip.dart';
 import '../widgets/custom_gift_card.dart';
 
@@ -24,6 +25,7 @@ class HomeScreen extends StatelessWidget {
           child: AppText.title('Gift Cards'),
         ),
       ),
+      bottomNavigationBar: CustomNavBar(index: 0),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20.0,
@@ -98,7 +100,7 @@ class _CardGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SizedBox(
-      height: size.height * 0.6,
+      height: size.height * 0.66,
       child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

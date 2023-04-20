@@ -41,10 +41,30 @@ class $AssetsCardsGen {
       [card1, card2, card3, card4, card5, card6, card7, card8];
 }
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/card.svg
+  String get card => 'assets/icons/card.svg';
+
+  /// File path: assets/icons/discover.svg
+  String get discover => 'assets/icons/discover.svg';
+
+  /// File path: assets/icons/gift.svg
+  String get gift => 'assets/icons/gift.svg';
+
+  /// File path: assets/icons/home.svg
+  String get home => 'assets/icons/home.svg';
+
+  /// List of all assets
+  List<String> get values => [card, discover, gift, home];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsCardsGen cards = $AssetsCardsGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
 
 class AssetGenImage {
