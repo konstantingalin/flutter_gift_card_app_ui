@@ -8,6 +8,7 @@ enum CardCategory {
   chrismas,
   general,
   congratulation,
+  wedding,
 }
 
 class CardModel {
@@ -42,7 +43,7 @@ class CardModel {
     ),
     CardModel(
       id: 3,
-      name: 'Drandpa and Grandma',
+      name: 'Drandpa & Grandma',
       thumbnailPath: Assets.cards.card3.path,
       categories: [CardCategory.general, CardCategory.chrismas],
       bgColor: ColorName.bgBlue,
@@ -65,12 +66,12 @@ class CardModel {
       id: 6,
       name: 'Indian woman',
       thumbnailPath: Assets.cards.card6.path,
-      categories: [CardCategory.general, CardCategory.chrismas],
+      categories: [CardCategory.general, CardCategory.chrismas, CardCategory.wedding],
       bgColor: ColorName.bgOrange,
     ),
     CardModel(
       id: 7,
-      name: 'Vincent Willem van Gogh',
+      name: 'Vincent van Gogh',
       thumbnailPath: Assets.cards.card7.path,
       categories: [CardCategory.general, CardCategory.chrismas],
       bgColor: ColorName.bgBlue,
