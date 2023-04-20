@@ -5,6 +5,7 @@ import 'package:flutter_gift_card_app_ui/utilities/card_category_extension.dart'
 
 import '../widgets/app_text.dart';
 import '../widgets/custom_chip.dart';
+import '../widgets/custom_gift_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,15 +29,19 @@ class HomeScreen extends StatelessWidget {
           horizontal: 20.0,
         ),
         child: Column(
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 10,
             ),
             _SearchBar(),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
             _CategoryFilters(),
+            SizedBox(
+              height: 10,
+            ),
+            _CardGrid(),
           ],
         ),
       ),
@@ -81,6 +86,35 @@ class _CategoryFilters extends StatelessWidget {
                 label: category.capitalName(),
               )),
         ],
+      ),
+    );
+  }
+}
+
+class _CardGrid extends StatelessWidget {
+  const _CardGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: size.height * 0.6,
+      child: GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: 8,
+        itemBuilder:(context, index) {
+          return Center(
+            child: CustomGiftCard(
+              card: CardModel.sampleCards[0],
+              width: size.width * 0.425,
+            ),
+          );
+        },
       ),
     );
   }
