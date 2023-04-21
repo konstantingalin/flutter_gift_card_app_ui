@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gift_card_app_ui/gen/colors.gen.dart';
 import 'package:flutter_gift_card_app_ui/models/card_model.dart';
 import 'package:flutter_gift_card_app_ui/providers/filtered_cards_provider.dart';
-import 'package:flutter_gift_card_app_ui/repositories/card_repository.dart';
+import 'package:flutter_gift_card_app_ui/providers/search_query_provider.dart';
+import 'package:flutter_gift_card_app_ui/providers/selected_category_provider.dart';
 import 'package:flutter_gift_card_app_ui/utilities/card_category_extension.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -57,11 +59,11 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _SearchBar extends StatelessWidget {
+class _SearchBar extends ConsumerWidget {
   const _SearchBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Flexible(
       child: TextFormField(
         decoration: InputDecoration(
@@ -73,17 +75,19 @@ class _SearchBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide.none,
             )),
-        onChanged: (value) {},
+        onChanged: ref.read(searchQueryProvider.notifier).onChange,
       ),
     );
   }
 }
 
-class _CategoryFilters extends StatelessWidget {
+class _CategoryFilters extends ConsumerWidget {
   const _CategoryFilters({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+final selectedCategory = ref.watch(selectedCategoryProvider);
+
     return SizedBox(
       height: 30,
       child: ListView(
@@ -92,8 +96,16 @@ class _CategoryFilters extends StatelessWidget {
         children: [
           ...CardCategory.values.map((category) => CustomChip(
                 label: category.capitalName(),
-              )),
-        ],
+                isSelected:  selectedCategory == category,
+                onTap: (){
+                  ref
+                    .read(selectedCategoryProvider.notifier)
+                    .setSelectedCategory(category);
+                },
+              ),
+            ),
+          const SizedBox(height: 10,),
+        ],  
       ),
     );
   }
@@ -112,7 +124,7 @@ class _CardGrid extends ConsumerWidget {
               child: CircularProgressIndicator(),
             ),
         data: (cards) => SizedBox(
-              height: size.height * 0.66,
+              height: size.height * 0.67,
               child: GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -124,7 +136,7 @@ class _CardGrid extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   return Center(
                     child: CustomGiftCard(
-                      card: CardModel.sampleCards[index],
+                      card: cards[index],
                       width: size.width * 0.425,
                     ),
                   );
